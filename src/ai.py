@@ -20,7 +20,7 @@ class Ai(object):
         sys.stdout.flush()
 
     def recv(self):
-        return  sys.stdin.readline().line.replace("\r\n", "").split(" ")
+        return  sys.stdin.readline().replace("\r\n", "").split(" ")
 
     def play(self):
         self.__x = 1

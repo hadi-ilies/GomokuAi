@@ -8,15 +8,19 @@ def start(args: list, player: Ai):
     player.send("OK")
 
 def info(args: list, player: Ai):
+    print(args)
     return
 
 def begin(args: list, player: Ai):
+    print(args)
     player.play()
 
 def turn(args: list, player: Ai):
+    print(args)
     return
 
 def board(args: list, player: Ai):
+    print(args)
     return
 
 def end(args: list, player: Ai):
