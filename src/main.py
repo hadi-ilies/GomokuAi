@@ -1,5 +1,5 @@
 def main():
-    print("LOOOL")
+    print(sys.stdin.readline())
 
 if __name__ == "__main__":
     #try:
