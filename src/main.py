@@ -1,7 +1,14 @@
+import sys
+from game import Game
+
 def main():
-    print(sys.stdin.readline())
+    game = Game()
+    while True:
+        try:
+            game.run(sys.stdin.readline().replace(("\r\n", "")).split(" "))
+        except Exception as error:
+            game.getDebugger().error(str(error))
+
 
 if __name__ == "__main__":
-    #try:
     main()
-    #catch():
