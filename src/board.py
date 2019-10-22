@@ -27,5 +27,5 @@ class Board(object):
     def str(self):
         text = str()
         for i in self.__board:
-            text = text + str(i) + '\n'
+            text = text + i.__str__() + '\n'
         return text
