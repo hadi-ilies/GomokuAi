@@ -27,9 +27,8 @@ def board(args: list, player: Ai):
     command = player.recv()
     while command[0] is not "DONE":
         infos = command[0].split(",")
-        if len(infos) < 3:
-            continue
-        player.getBoard().set(int(infos[0]), int(infos[1]), int(infos[2])) ## check args
+        if len(infos) >= 3:
+            player.getBoard().set(int(infos[0]), int(infos[1]), int(infos[2])) ## check args
         command = player.recv()
     player.play(-1, -1)
 
