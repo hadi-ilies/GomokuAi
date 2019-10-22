@@ -9,19 +9,26 @@ def start(args: list, player: Ai):
 
 def info(args: list, player: Ai):
     print(args)
-    return
+    return None
 
 def begin(args: list, player: Ai):
-    print(args)
-    player.play()
+    player.firstPlay()
 
 def turn(args: list, player: Ai):
     print(args)
-    return
+    coord = args[0].split(",")
+    x, y = coord
+    player.getBoard().set(x, y, 2) ## enemy's stone
+    player.play(x, y)
 
 def board(args: list, player: Ai):
     print(args)
-    return
+    command = player.recv()
+    while command[0] is not "DONE":
+        infos = command[0].split(",")
+        player.getBoard().set(int(infos[0]), int(infos[1]), int(infos[2]))
+        command = player.recv()  
+    player.play(-1, -1)
 
 def end(args: list, player: Ai):
     sys.exit(0)

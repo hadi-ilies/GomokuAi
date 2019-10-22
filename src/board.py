@@ -20,11 +20,12 @@ class Board(object):
             raise ValueError("Invalid position")
         self.__board[y][x] = value
     
-    def size(self):
+    def getSize(self):
         return self.__size
     
+    ##i.__str__() == str(i) ??
     def str(self):
         text = str()
         for i in self.__board:
-            text = text + i.__str__() + '\n'
+            text = text + str(i) + '\n'
         return text
