@@ -23,9 +23,8 @@ def turn(args: list, player: Ai):
     player.play(x, y)
 
 def board(args: list, player: Ai):
-    #print(args)
     command = player.recv()
-    while command[0] is not "DONE":
+    while command[0] != "DONE":
         infos = command[0].split(",")
         if len(infos) >= 3:
             player.getBoard().set(int(infos[0]), int(infos[1]), int(infos[2])) ## check args
