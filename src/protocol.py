@@ -17,7 +17,8 @@ def begin(args: list, player: Ai):
 def turn(args: list, player: Ai):
     #print(args)
     coord = args[0].split(",")
-    x, y = coord
+    x = int(coord[0])
+    y = int(coord[1])
     player.getBoard().set(x, y, 2) ## enemy's stone
     player.play(x, y)
 
