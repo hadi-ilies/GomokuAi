@@ -24,7 +24,7 @@ class Ai(object):
         sys.stdout.flush()
 
     def recv(self):
-        return sys.stdin.readline().replace("\r", "").replace("\n", "").split(" ")
+        return input().replace("\r", "").replace("\n", "").split(" ")
 
     def firstPlay(self):
         self.__x = random.randint(0, self.__board.getSize() - 1)
