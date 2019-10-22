@@ -8,21 +8,21 @@ def start(args: list, player: Ai):
     player.send("OK")
 
 def info(args: list, player: Ai):
-    print(args)
+    #print(args)
     return None
 
 def begin(args: list, player: Ai):
     player.firstPlay()
 
 def turn(args: list, player: Ai):
-    print(args)
+    #print(args)
     coord = args[0].split(",")
     x, y = coord
     player.getBoard().set(x, y, 2) ## enemy's stone
     player.play(x, y)
 
 def board(args: list, player: Ai):
-    print(args)
+    #print(args)
     command = player.recv()
     while command[0] is not "DONE":
         infos = command[0].split(",")
