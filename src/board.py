@@ -3,6 +3,12 @@ class Board(object):
         self.__size = size
         self.__board = [[0 for _ in range(size)] for _ in range(size)]
 
+    def copyBoard(self):
+        return self
+
+    def getBoard(self):
+        return self.__board
+
     def get(self, x: int, y: int):
         if x < 0 or x >= self.__size or y < 0 or y >= self.__size:
             raise ValueError("Invalid position")
@@ -17,7 +23,8 @@ class Board(object):
 
     def set(self, x: int, y: int, value: int):
         if x < 0 or x >= self.__size or y < 0 or y >= self.__size:
-            raise ValueError("Invalid position")
+            return False
+            #raise ValueError("Invalid position")
         self.__board[y][x] = value
     
     def getSize(self):

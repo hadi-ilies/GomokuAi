@@ -27,8 +27,8 @@ class Ai(object):
         return input().replace("\r", "").replace("\n", "").split(" ")
 
     def firstPlay(self):
-        self.__x = random.randint(0, self.__board.getSize() - 1)
-        self.__y = random.randint(0, self.__board.getSize() - 1)
+        self.__x = self.__board.getSize() / 2
+        self.__y = self.__board.getSize() / 2
         self.put(self.__x, self.__y)
     
     def play(self, xEnemy: int, yEnemy: int):
