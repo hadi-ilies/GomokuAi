@@ -11,3 +11,5 @@ class Debug(object):
     def error(self, error: str):
         print("ERROR", error)
         sys.stdout.flush()
+
+Debugger = Debug()

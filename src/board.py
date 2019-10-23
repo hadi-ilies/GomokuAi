@@ -3,9 +3,6 @@ class Board(object):
         self.__size = size
         self.__board = [[0 for _ in range(size)] for _ in range(size)]
 
-    def copyBoard(self):
-        return self
-
     def getBoard(self):
         return self.__board
 

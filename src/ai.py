@@ -1,5 +1,6 @@
 import sys
 from board import Board
+from minmax import MinMax
 import random
 
 class Ai(object):
@@ -7,7 +8,9 @@ class Ai(object):
         self.__board = Board(4)
         self.__x = int()
         self.__y = int()
-    
+        self.__maxDepth = 3
+        self.__minmax = MinMax(self.__board)
+
     ##stoneOwner 1 is our stone 2 is the enemy stone 
     def put(self, x: int, y: int):
         self.__board.set(x, y, 1)
@@ -18,6 +21,7 @@ class Ai(object):
 
     def setBoard(self, size: int):
         self.__board = Board(size)
+        self.__minmax = MinMax(self.__board)
 
     def send(self, text: str):
         print(text)
@@ -27,18 +31,13 @@ class Ai(object):
         return input().replace("\r", "").replace("\n", "").split(" ")
 
     def firstPlay(self):
-        self.__x = self.__board.getSize() / 2
-        self.__y = self.__board.getSize() / 2
+        self.__x = int(self.__board.getSize() / 2)
+        self.__y = int(self.__board.getSize() / 2)
         self.put(self.__x, self.__y)
     
     def play(self, xEnemy: int, yEnemy: int):
         ## todo change this shit soon as you can
-        x = -1
-        y = -1
-        while (self.__board.isPlayable(x, y) == False):
-            x = random.randint(0, self.__board.getSize() - 1)
-            y = random.randint(0, self.__board.getSize() - 1)
-        # Bof go mettre une ia
-        self.put(x, y)
+        move = self.__minmax.calculateNextMove(self.__maxDepth)
+        self.put(move.x, move.y)
 
     
