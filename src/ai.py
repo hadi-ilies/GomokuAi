@@ -5,10 +5,10 @@ import random
 
 class Ai(object):
     def __init__(self):
-        self.__board = Board(4)
+        self.__board = Board(19)
         self.__x = int()
         self.__y = int()
-        self.__maxDepth = 3
+        self.__maxDepth = 2
         self.__minmax = MinMax(self.__board)
 
     ##stoneOwner 1 is our stone 2 is the enemy stone 
