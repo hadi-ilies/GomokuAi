@@ -12,6 +12,7 @@ class MinMax(object):
         self.__consecutive = 0
         self.__score = 0
         self.__blocks = 2
+        self.lol = 0
     
     def getEvaluationCount(self):
         return self.__evaluationCount
@@ -21,7 +22,7 @@ class MinMax(object):
 
     def calculateNextMove(self, depth: int):
         move = Vector(-1, -1)
-        startTime = time.process_time()
+        #startTime = time.process_time()
         bestMove = self.searchWinningMove()
         
         if bestMove != None:
@@ -31,18 +32,21 @@ class MinMax(object):
             Debugger.debug("MINMAX")
             tempMove = self.minmaxAlphaBeta(depth, self.__board, True, -1.0, float(self.__winScore))
             move = Vector(tempMove[1], tempMove[2])
+            Debugger.debug("DEBUG")
+            self.evaluateBoard(self.__board, True)
             #Debugger.debug("MOVE = " + str(move))
             #while self.__board.isPlayable(move.x, move.y) == False:
             #    move.x = random.randint(0, self.__board.getSize() - 1)
             #    move.y = random.randint(0, self.__board.getSize() - 1)
-        Debugger.debug("Calculation time: " + str((time.process_time() - startTime)) + " ms")
+        #Debugger.debug("Calculation time: " + str((time.process_time() - startTime)) + " ms")
         return move
 
     ##TODO
-    def evaluateBoard(self, board: Board, myTurn: bool):
-        blackScore = float(self.getScore(board, True, myTurn))
-        whiteScore = float(self.getScore(board, False, myTurn))
-        #Debugger.debug("DEBUUUG")
+    def evaluateBoard(self, board: Board, blacksTurn: bool):
+        blackScore = float(self.getScore(board, True, blacksTurn))
+        whiteScore = float(self.getScore(board, False, blacksTurn))
+        #Debugger.debug("----Enemy : " + str(blackScore))
+        #Debugger.debug("----me : " + str(whiteScore))
         if blackScore == 0: 
             blackScore = 1.0
         return float(whiteScore / blackScore)
@@ -122,26 +126,26 @@ class MinMax(object):
                 if i > 0:
                     if j > 0:
                         if board[i - 1][j - 1] > 0 or board[i][j - 1] > 0: ## >
-                            movesTab.append([j, i]) ## insert move
+                            movesTab.append([i, j]) ## insert move
                             continue
                     if j < boardSize - 1:
                         if board[i - 1][j + 1] > 0 or board[i][j + 1] > 0:
-                            movesTab.append([j, i]) ## insert move
+                            movesTab.append([i, j]) ## insert move
                             continue
                     if board[i - 1][j] > 0:
-                        movesTab.append([j, i]) ## insert move
+                        movesTab.append([i, j]) ## insert move
                         continue
                 if i < boardSize - 1:
                     if j > 0:
                         if board[i + 1][j - 1] > 0 or board[i][j - 1] > 0: ## >
-                            movesTab.append([j, i]) ## insert move
+                            movesTab.append([i, j]) ## insert move
                             continue
                     if j < boardSize - 1:
                         if board[i + 1][j + 1] > 0 or board[i][j + 1] > 0:
-                            movesTab.append([j, i]) ## insert move
+                            movesTab.append([i, j]) ## insert move
                             continue
                     if board[i + 1][j] > 0:
-                        movesTab.append([j, i]) ## insert move
+                        movesTab.append([i, j]) ## insert move
                         continue
         ##Debugger.debug("TESTTT = " + str(movesTab))
         return movesTab
@@ -171,6 +175,8 @@ class MinMax(object):
     def getConsecutiveSetScore(self, consecutive, blocks, myTurn: bool):
         winGuarantee = 1000000
         #it is not a win move
+        #if consecutive > 1:
+        #    Debugger.debug(str(consecutive))
         if blocks == 2 and consecutive < 5:
             return 0
         #you already won
@@ -206,15 +212,16 @@ class MinMax(object):
             else:
                 return 3
         if consecutive == 1:
-            return 10
+            return 1
         return self.__winScore * 2
-
     def evaluateDir(self, boardM, i: int, j: int, myTurn: bool, blacksTurn: bool):
         ##Debugger.debug("COUNT : " + str(boardM[i][j]))
-        if myTurn and boardM[i][j] == 2:
-            self.__consecutive = self.__consecutive + 1
-        ##not myTurn
-        if myTurn == False and boardM[i][j] == 1:
+        owner = 1
+        if myTurn:
+            owner = 2
+        else:
+            owner = 1
+        if boardM[i][j] == owner:
             self.__consecutive = self.__consecutive + 1
         elif boardM[i][j] == 0:
             if self.__consecutive > 0:
@@ -264,8 +271,8 @@ class MinMax(object):
         self.__score = 0
 
         #boardSize = len(boardM) - 1
-        for j in range(0, len(boardM[0]) - 1):
-            for i in range(0, len(boardM) - 1):
+        for i in range(0, len(boardM) - 1):
+            for j in range(0, len(boardM[0]) - 1):
                 self.evaluateDir(boardM, i, j, myTurn, blacksTurn)
             if self.__consecutive > 0:
                 self.__score += self.getConsecutiveSetScore(self.__consecutive, self.__blocks, blacksTurn == myTurn)
@@ -280,8 +287,8 @@ class MinMax(object):
         self.__blocks = 2
         self.__score = 0
 
-        for i in range(0, len(boardM) - 1):
-            for j in range(0, len(boardM[0]) - 1):
+        for j in range(0, len(boardM[0]) - 1):
+            for i in range(0, len(boardM) - 1):
                 self.evaluateDir(boardM, i, j, myTurn, blacksTurn)
             if self.__consecutive > 0:
                 self.__score += self.getConsecutiveSetScore(self.__consecutive, self.__blocks, blacksTurn == myTurn)

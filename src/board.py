@@ -9,12 +9,12 @@ class Board(object):
     def get(self, x: int, y: int):
         if x < 0 or x >= self.__size or y < 0 or y >= self.__size:
             raise ValueError("Invalid position")
-        return self.__board[y][x]
+        return self.__board[x][y]
 
     def isPlayable(self, x: int, y: int):
         if x < 0 or x >= self.__size or y < 0 or y >= self.__size:
             return False
-        if self.__board[y][x] > 0:
+        if self.__board[x][y] > 0:
             return False
         return True
 
@@ -22,7 +22,7 @@ class Board(object):
         if x < 0 or x >= self.__size or y < 0 or y >= self.__size:
             return False
             #raise ValueError("Invalid position")
-        self.__board[y][x] = value
+        self.__board[x][y] = value
     
     def getSize(self):
         return self.__size
