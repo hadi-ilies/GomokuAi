@@ -318,7 +318,7 @@ class MinMax(object):
             iStart = max(0, k)
             iEnd = min(len(boardM) + k - 1, len(boardM) - 1)
             for i in range(iStart, iEnd):
-                j = k - i
+                j = i - k
                 self.evaluateDir(boardM, i, j, myTurn, blacksTurn)
             if self.__consecutive > 0:
                 self.__score += self.getConsecutiveSetScore(self.__consecutive, self.__blocks, blacksTurn == myTurn)
