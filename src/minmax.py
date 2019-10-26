@@ -76,7 +76,7 @@ class MinMax(object):
                     bestMove[1] = move[0] 
                     bestMove[2] = move[1]
         else:
-            bestMove[0] = float(self.__winScore)
+            bestMove[0] = 100000000.0 #float(self.__winScore)
             bestMove[1] = allPossibleMoves[0][0]
             bestMove[2] = allPossibleMoves[0][1]
             for move in allPossibleMoves:
