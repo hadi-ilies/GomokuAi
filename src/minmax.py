@@ -28,10 +28,10 @@ class MinMax(object):
             move.x = bestMove.x
             move.y = bestMove.y
         else:
-            Debugger.debug("MINMAX")
+            #Debugger.debug("MINMAX")
             tempMove = self.minmaxAlphaBeta(depth, self.__board, True, -1.0, float(self.__winScore))
             move = Vector(tempMove[1], tempMove[2])
-            Debugger.debug("DEBUG")
+            #Debugger.debug("DEBUG")
             self.evaluateBoard(self.__board, True)
         return move
 
@@ -132,6 +132,7 @@ class MinMax(object):
                     if board[i + 1][j] > 0:
                         movesTab.append([i, j]) ## insert move
                         continue
+        ##Debugger.debug(movesTab)
         return movesTab
 
     def searchWinningMove(self):
@@ -155,6 +156,8 @@ class MinMax(object):
     
     def getConsecutiveSetScore(self, consecutive, blocks, myTurn: bool):
         winGuarantee = 1000000
+        #if consecutive > 1:
+        #Debugger.debug("CONS = " + str(consecutive))
         #it is not a win move
         if blocks == 2 and consecutive < 5:
             return 0
@@ -164,6 +167,7 @@ class MinMax(object):
 
         if consecutive == 4:
             if myTurn:
+                #Debugger.debug("HERE" + str(self.__score))
                 return winGuarantee
             else:
                 if blocks == 0:
@@ -174,7 +178,7 @@ class MinMax(object):
         if consecutive == 3:
             if blocks == 0:
                 if myTurn:
-                    return 50000
+                    return 5
                 else:
                     return 200
             else:
@@ -221,8 +225,8 @@ class MinMax(object):
         self.__blocks = 2
         self.__score = 0
 
-        for i in range(0, len(boardM) - 1):
-            for j in range(0, len(boardM[0]) - 1):
+        for i in range(0, len(boardM)):
+            for j in range(0, len(boardM[0])):
                 self.evaluateDir(boardM, i, j, myTurn, blacksTurn)
             if self.__consecutive > 0:
                 self.__score += self.getConsecutiveSetScore(self.__consecutive, self.__blocks, blacksTurn == myTurn)
@@ -237,8 +241,8 @@ class MinMax(object):
         self.__blocks = 2
         self.__score = 0
 
-        for j in range(0, len(boardM[0]) - 1):
-            for i in range(0, len(boardM) - 1):
+        for j in range(0, len(boardM[0])):
+            for i in range(0, len(boardM)):
                 self.evaluateDir(boardM, i, j, myTurn, blacksTurn)
             if self.__consecutive > 0:
                 self.__score += self.getConsecutiveSetScore(self.__consecutive, self.__blocks, blacksTurn == myTurn)
@@ -253,9 +257,9 @@ class MinMax(object):
         self.__score = 0
 
         ##From bottom-left to top-right diagonally
-        for k in range(0, 2 * (len(boardM) - 1)):
+        for k in range(0, 2 * (len(boardM))):
             iStart = max(0, k - len(boardM) + 1)
-            iEnd = min(len(boardM) - 1, k)
+            iEnd = min(len(boardM), k)
             for i in range(iStart, iEnd):
                 j = k - i
                 self.evaluateDir(boardM, i, j, myTurn, blacksTurn)
@@ -264,9 +268,9 @@ class MinMax(object):
             self.__consecutive = 0
             self.__blocks = 2
         #From top-left to bottom-right diagonally
-        for k in range(1 - len(boardM) - 1, len(boardM) - 1):
+        for k in range(1 - len(boardM), len(boardM)):
             iStart = max(0, k)
-            iEnd = min(len(boardM) + k - 1, len(boardM) - 1)
+            iEnd = min(len(boardM) + k, len(boardM))
             for i in range(iStart, iEnd):
                 j = i - k
                 self.evaluateDir(boardM, i, j, myTurn, blacksTurn)
@@ -280,4 +284,5 @@ class MinMax(object):
     def getScore(self, board: Board, myturn: bool, blacksTurn: bool):
         boardM = board.getBoard()
         score = self.evaluateHorizontal(boardM, myturn, blacksTurn) + self.evaluateVertival(boardM, myturn, blacksTurn) + self.evaluateDiagonal(boardM, myturn, blacksTurn)
+        #Debugger.debug("SCORE = " + str(score))
         return score
