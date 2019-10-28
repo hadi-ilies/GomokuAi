@@ -178,7 +178,7 @@ class MinMax(object):
         if consecutive == 3:
             if blocks == 0:
                 if myTurn:
-                    return 5
+                    return 50000
                 else:
                     return 200
             else:
